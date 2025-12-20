@@ -1,0 +1,365 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Earth Exploration</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Space+Mono&display=swap" rel="stylesheet">
+    <style>
+        /* CSS Variables for a clean, cohesive theme */
+        :root{
+            --bg: #070a1a; /* Very dark space background */
+            --card: #181c3e; /* Dark blue/purple card base */
+            --accent: #7be3ff; /* Bright cyan/aqua for accents */
+            --accent-glow: #7be3ff80; /* Lighter glow for subtle effects */
+            --muted: #aeb8d8; /* Light blue/grey for body text */
+            --text-primary: #e6eef8;
+            --radius: 16px;
+            --shadow-primary: 0 8px 30px rgba(0, 0, 0, 0.6);
+            --shadow-secondary: 0 0 15px var(--accent-glow);
+        }
+
+        /* Base Reset and Typography */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body{
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+            background-image: radial-gradient(circle at 50% 10%, #1e245a 0%, transparent 80%); /* Subtle top gradient */
+        }
+
+        /* --- Header/Banner Section --- */
+        header {
+            background:url('https://upload.wikimedia.org/wikipedia/commons/9/97/The_Earth_seen_from_Apollo_17.jpg') center/cover no-repeat;
+            height: 60vh;
+            display:flex;
+            flex-direction:column;
+            justify-content:center;
+            align-items:center;
+            color:white;
+            text-shadow:0 0 10px black;
+            position: relative;
+            z-index: 1; /* Keep content above subtle overlay */
+        }
+        /* Subtle Gradient Overlay for better text readability */
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5); /* Dark overlay */
+            pointer-events: none;
+            z-index: 2;
+        }
+        header * {
+            position: relative;
+            z-index: 3; /* Ensure text is above overlay */
+        }
+
+
+        h1{
+            font-size: 48px;
+            text-align: center;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            color: var(--accent);
+            text-shadow: 0 0 15px var(--accent-glow);
+        }
+        header p {
+            font-size: 20px;
+            font-weight: 300;
+            color: var(--text-primary);
+            text-shadow: 0 0 8px black;
+        }
+
+        /* --- Navigation Bar --- */
+        nav {
+            background: #101430;
+            padding: 15px 0;
+            text-align:center;
+            box-shadow: var(--shadow-primary);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        nav a {
+            color: var(--accent);
+            margin: 0 15px;
+            text-decoration:none;
+            font-weight: 600;
+            transition: color 0.3s;
+            padding: 5px 10px;
+            border-bottom: 2px solid transparent;
+        }
+        nav a:hover {
+            color: var(--text-primary);
+            border-bottom: 2px solid var(--accent);
+        }
+
+        /* --- General Typography/Layout for Content --- */
+        h2, h3 {
+            font-weight: 700;
+            margin-bottom: 16px;
+            line-height: 1.2;
+        }
+        h2{
+            font-size: 28px;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+        }
+        h2::before {
+            content: attr(data-icon);
+            font-size: 24px;
+            margin-right: 12px;
+            color: var(--text-primary);
+        }
+        p{
+            margin-bottom: 12px;
+            color: var(--muted);
+        }
+
+        /* --- Main Content Layout --- */
+        .container{
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 24px;
+        }
+
+        /* Card Styling - The core visual element */
+        .card{
+            background: linear-gradient(145deg, #181c3e, #0e112d);
+            padding: 30px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-primary);
+            border: 1px solid rgba(123, 227, 255, 0.1); /* Subtle border */
+            margin-bottom: 30px; /* Space between cards */
+            transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.3s;
+        }
+        .card:hover{
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-primary), var(--shadow-secondary);
+        }
+
+        /* List Styling */
+        .list{
+            margin-top: 18px;
+            padding-left: 0;
+            list-style: none; /* Remove default list style */
+        }
+        .list-item{
+            margin-bottom: 10px;
+            position: relative;
+            padding-left: 25px;
+            color: var(--text-primary);
+        }
+        .list-item::before{
+            content: '•'; /* Small solid dot */
+            position: absolute;
+            left: 0;
+            top: 0;
+            font-size: 20px;
+            line-height: 1;
+            color: var(--accent);
+            font-weight: 800;
+        }
+
+        /* --- Quiz Styles --- */
+        #quiz button, #submit-quiz-btn {
+            padding: 12px 25px;
+            background: linear-gradient(90deg, #7be3ff, #4ac4e0);
+            color: #042031;
+            border: none;
+            border-radius: 10px;
+            font-weight: 800;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(123, 227, 255, 0.5);
+            transition: all 0.2s ease-in-out;
+            margin-top: 15px;
+        }
+        #quiz button:hover, #submit-quiz-btn:hover {
+            transform: translateY(-2px) scale(1.01);
+            box-shadow: 0 6px 20px rgba(123, 227, 255, 0.7);
+        }
+        .quiz-question {
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px dashed rgba(174, 184, 216, 0.2);
+        }
+        .quiz-question p {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+        .quiz-question input {
+            background: #2a3055;
+            border: 1px solid var(--accent);
+            color: var(--text-primary);
+            padding: 8px 12px;
+            border-radius: 6px;
+            width: 80%;
+            margin-top: 5px;
+        }
+        #result {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #1e4555;
+            border-radius: 8px;
+            color: var(--accent);
+            font-weight: 700;
+            text-align: center;
+            font-size: 1.1em;
+        }
+
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Discover Our Extraordinary Planet</h1>
+    <p>Explore Earth—from its structure to its ecosystems.</p>
+</header>
+
+<nav>
+    <a href="#overview">Overview</a>
+    <a href="#structure">Structure</a>
+    <a href="#atmosphere">Atmosphere</a>
+    <a href="#hydrosphere">Hydrosphere</a>
+    <a href="#biosphere">Biosphere</a>
+    <a href="#tectonics">Geology</a>
+    <a href="#space">Space</a>
+    <a href="#history">History</a>
+    <a href="#issues">Issues</a>
+    <a href="#funfacts">Facts</a>
+    <a href="#quiz">Quiz</a>
+</nav>
+
+<div class="container">
+    <section id="overview" class="card">
+        <h2 data-icon="🌎">Earth Overview</h2>
+        <p>Earth is the third planet from the Sun, approximately **4.54 billion years old**, and the only known world with liquid water, life, and a stable atmosphere. Our home is a dynamic system of interacting spheres.</p>
+    </section>
+
+    <section id="structure" class="card">
+        <h2 data-icon="⛏️">Structure of Earth</h2>
+        <ul class="list">
+            <li class="list-item"><strong>Crust:</strong> The relatively thin, solid outermost layer.</li>
+            <li class="list-item"><strong>Mantle:</strong> A thick, semi-solid layer of rock where convection drives tectonic movement.</li>
+            <li class="list-item"><strong>Outer Core:</strong> A hot, liquid layer of iron and nickel, generating Earth's magnetic field.</li>
+            <li class="list-item"><strong>Inner Core:</strong> A dense, incredibly hot **solid** sphere of metal at the planet's center.</li>
+        </ul>
+    </section>
+
+    <section id="atmosphere" class="card">
+        <h2 data-icon="☁️">Atmosphere & Climate</h2>
+        <p>Earth's protective blanket is composed primarily of **78% nitrogen** and **21% oxygen**.</p>
+        <ul class="list">
+            <li class="list-item">Layers include: Troposphere (where weather occurs), Stratosphere, Mesosphere, Thermosphere, and Exosphere.</li>
+            <li class="list-item">The **Greenhouse Effect** is a natural process vital for regulating Earth’s temperature, making life possible.</li>
+        </ul>
+    </section>
+
+    <section id="hydrosphere" class="card">
+        <h2 data-icon="💧">Hydrosphere (Water Cycle)</h2>
+        <p>The hydrosphere encompasses all of Earth’s water: oceans, rivers, lakes, glaciers, groundwater, and vapor. This water is constantly moving through the hydrological cycle—a continuous process of evaporation, condensation, precipitation, and runoff.</p>
+    </section>
+
+    <section id="biosphere" class="card">
+        <h2 data-icon="🌿">Biosphere (Life)</h2>
+        <p>The biosphere is the global sum of all ecosystems. Earth hosts millions of species, from microbes to blue whales, thriving in diverse environments like forests, oceans, deserts, and tundra. All life is interconnected through complex **food webs**.</p>
+    </section>
+
+    <section id="tectonics" class="card">
+        <h2 data-icon="🌋">Plate Tectonics & Geology</h2>
+        <p>The lithosphere is divided into several large and small tectonic plates. Their slow, continuous movement (continental drift) is the driving force behind major geological events, including **earthquakes**, **volcanoes**, and the formation of **mountain ranges**.</p>
+    </section>
+
+    <section id="space" class="card">
+        <h2 data-icon="🛰️">Earth in Space</h2>
+        <p>Earth orbits the Sun every **365.25 days** and rotates on its axis every **24 hours**. The planet's axial tilt of approximately **$23.5^{\circ}$** is the primary reason for the seasonal changes we experience.</p>
+    </section>
+
+    <section id="history" class="card">
+        <h2 data-icon="⏳">History of Earth (Eons)</h2>
+        <ul class="list">
+            <li class="list-item">**Hadean Eon:** The Earth forms and its surface solidifies.</li>
+            <li class="list-item">**Archean Eon:** The first simple life (prokaryotes) appears.</li>
+            <li class="list-item">**Proterozoic Eon:** Oxygen levels rise significantly (Great Oxidation Event).</li>
+            <li class="list-item">**Phanerozoic Eon:** The explosion of complex life, including fish, dinosaurs, mammals, and ultimately, humans.</li>
+        </ul>
+    </section>
+
+    <section id="issues" class="card">
+        <h2 data-icon="⚠️">Environmental Issues</h2>
+        <p>Current challenges facing the planet require global action:</p>
+        <ul class="list">
+            <li class="list-item">**Climate Change:** Long-term shifts in temperatures and weather patterns.</li>
+            <li class="list-item">**Pollution:** Contamination of air, water, and land.</li>
+            <li class="list-item">**Deforestation:** Clearing of the planet's essential forests.</li>
+            <li class="list-item">**Extinction Crisis:** The accelerated loss of biodiversity.</li>
+        </ul>
+    </section>
+
+    <section id="funfacts" class="card">
+        <h2 data-icon="💡">Fun Facts</h2>
+        <ul class="list">
+            <li class="list-item">Earth travels around the Sun at an incredible speed of approximately **107,000 km/h** ($67,000$ mph).</li>
+            <li class="list-item">The deepest known point in Earth's oceans is the **Mariana Trench** ($11$ km deep).</li>
+            <li class="list-item">The largest mountain on Earth, measured from base to peak, is **Mauna Kea** in Hawaii.</li>
+        </ul>
+    </section>
+
+    <section id="quiz" class="card">
+        <h2 data-icon="❓">Earth Quiz</h2>
+
+        <div id="quiz-container"></div>
+        <button id="submit-quiz-btn" onclick="submitQuiz()">Submit Quiz</button>
+        <p id="result"></p>
+    </section>
+</div>
+
+<script>
+    const questions = [
+        {q:"What is the third planet from the Sun?", a:"Earth"},
+        {q:"How old is Earth approximately?", a:"4.54 billion years"},
+        {q:"What layer of Earth is liquid?", a:"Outer core"},
+        {q:"What gas makes up most of Earth’s atmosphere?", a:"Nitrogen"},
+        {q:"What percentage of Earth is covered in water? (The answer is 71%)", a:"71%"},
+        {q:"What causes seasons?", a:"Tilt of Earth's axis"},
+        {q:"What is the deepest point on Earth?", a:"Mariana Trench"},
+        {q:"What process moves Earth's plates?", a:"Plate tectonics"},
+        {q:"What layer contains our weather?", a:"Troposphere"},
+        {q:"What is the greenhouse effect important for?", a:"Regulating temperature"}
+    ];
+
+    let quizHTML = "";
+    questions.forEach((item, i) => {
+        // Note: The input type remains text as per the original script logic
+        quizHTML += `<div class='quiz-question'><p>${i+1}. ${item.q}</p><input id='q${i}' /></div>`;
+    });
+    document.getElementById("quiz-container").innerHTML = quizHTML;
+
+    function submitQuiz() {
+        let score = 0;
+        questions.forEach((item, i) => {
+            const user = document.getElementById("q"+i).value.trim().toLowerCase();
+            // The original script accepts the full answer string in lowercase
+            if(user === item.a.toLowerCase()) score++;
+        });
+        document.getElementById("result").textContent = `🛰️ You scored ${score}/10! ${score > 7 ? 'Excellent work, Earth expert!' : 'Keep exploring the planet!'}`;
+    }
+</script>
+
+</body>
+</html>
